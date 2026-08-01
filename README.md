@@ -1,26 +1,26 @@
-# DD-CVAE — Conception de Stratifiés Double-Double par CVAE Multi-Matériaux
+# DD-CVAE — Design of Double-Double Laminates Using Multi-Material VAE
 
-> Génération et optimisation de stratifiés composites `[a/-a/b/-b]ₓ` guidées par un
-> **Variational Auto-Encoder Conditionnel**.
+> Generation and Optimization of Composite Laminates `[a/-a/b/-b]ₓ` guided by a
+> **Conditional Variational Autoencoder**.
 
 ---
 
-## Entraînement du CVAE
+## CVAE Training
 
-### Stratégie d'entraînement en deux phases
+### Two-Phase Training Strategy
 
-**Phase 1 — Warm-up (epochs 1 à 150) :**
-- beta croît linéairement de 0 à 0.2
-- λ_phys = 0 (pas de pénalité Miki)
-- Le modèle apprend la reconstruction et la structure latente
+**Phase 1 — Warm-up (epochs 1 to 150) :**
+- beta increases linearly from 0 to 0.2
+- λ_phys = 0 (no penalty, Miki)
+- The model learns the reconstruction and the latent structure
 
-**Phase 2 — Activation des pénalités (epochs 151 à 300) :**
+**Phase 2 — Penalty Activation (Epochs 151–300) :**
 - beta = 0.2 (stable)
-- λ_phys monte de 0 à 10 sur 50 epochs
-- Reset de la patience et du learning rate (5×10⁻⁴)
-- Le modèle apprend à générer des LP géométriquement valides
+- λ_phys increases from 0 to 10 over 50 epochs
+- Reset patience and learning rate (5×10⁻⁴)
+- The model learns to generate geometrically valid LP
 
-### Suivi de l'entraînement
+### Training Tracking
 
 ```
 [  10/300] beta=0.01 λr=0.00 λp=0.00  train 0.04521 (r=0.0421 kl=0.0234 p=0.0000)  val 0.04318  lr=1.0e-03  t=42s <= best
